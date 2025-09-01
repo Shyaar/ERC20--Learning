@@ -25,25 +25,6 @@ contract ERC20 {
     event Transfer(address indexed from, address indexed to, uint256 amount);
     event Approval(address indexed owner, address indexed spender, uint256 amount);
 
-    // function balanceOf(address _accountOwner) public view returns(uint256 balance_){
-    //     balance_ = balances[_accountOwner];
-    // }
-
-    // function allowance(address _owner, address _spender) public view returns(uint256 allowanceBal_){
-    //     allowanceBal_ = allowances[_owner][_spender];
-    // }
-
-    // function name() public view returns(string memory name_){
-    //     name_ = tokenName;
-    // }
-
-    // function symbol() public view returns(string memory symbol_){
-    //     symbol_ = tokenSymbol;
-    // }
-
-    // function decimals() public view returns(uint256 decimals_){
-    //     decimals_ = decimals;
-    // }
 
     function transfer(address _to, uint256 _amount) public returns(bool success){
         require(balances[msg.sender] >= _amount, "insufficient balance");
@@ -62,6 +43,7 @@ contract ERC20 {
 
         balances[_from] -= _amount;
         balances[_to] += _amount;
+        allowances[_from][msg.sender] -= _amount;
 
         emit Transfer(_from, _to, _amount);
         return true;
@@ -69,10 +51,31 @@ contract ERC20 {
 
     function approve (address _spender, uint256 _amount) public returns(bool success){
         allowances[msg.sender][_spender] = _amount;
+
+        
         emit Approval(msg.sender, _spender, _amount);
         return true;
     }
+}
 
-    
+contract Test{
+        // function balanceOf(address _accountOwner) public view returns(uint256 balance_){
+    //     balance_ = balances[_accountOwner];
+    // }
 
+    // function allowance(address _owner, address _spender) public view returns(uint256 allowanceBal_){
+    //     allowanceBal_ = allowances[_owner][_spender];
+    // }
+
+    // function name() public view returns(string memory name_){
+    //     name_ = tokenName;
+    // }
+
+    // function symbol() public view returns(string memory symbol_){
+    //     symbol_ = tokenSymbol;
+    // }
+
+    // function decimals() public view returns(uint256 decimals_){
+    //     decimals_ = decimals;
+    // }
 }
